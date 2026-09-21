@@ -1,154 +1,390 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página de Prueba</title>
-    <style>
-        :root {
-            --bg-color: #f4f7f6;
-            --card-bg: #ffffff;
-            --text-color: #333333;
-            --primary-color: #007bff;
-            --primary-hover: #0056b3;
-            --border-color: #007bff;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zeta Wear · Dashboard Matriz ABC × XYZ</title>
+  <style>
+    :root {
+      --bg-color: #f8f9fa;
+      --card-bg: #ffffff;
+      --text-color: #212529;
+      --border-color: #dee2e6;
+      --primary: #0d6efd;
+      --danger-bg: #f8d7da;
+      --danger-text: #842029;
+      --warning-bg: #fff3cd;
+      --warning-text: #664d03;
+      --cell-hover: #e9ecef;
+      --cell-selected: #cfe2ff;
+    }
 
-        body.dark-mode {
-            --bg-color: #1e1e2e;
-            --card-bg: #2a2a3c;
-            --text-color: #ffffff;
-            --primary-color: #3b82f6;
-            --primary-hover: #2563eb;
-            --border-color: #3b82f6;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-        }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 1.5rem;
+      line-height: 1.5;
+    }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            transition: background-color 0.3s, color 0.3s;
-        }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
 
-        .container {
-            background-color: var(--card-bg);
-            padding: 2.5rem;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            max-width: 500px;
-            width: 90%;
-            text-align: center;
-            transition: background-color 0.3s;
-        }
+    header {
+      margin-bottom: 2rem;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 1rem;
+    }
 
-        h1 {
-            margin-top: 0;
-            color: var(--primary-color);
-        }
+    h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.75rem;
+      color: #1a1a1a;
+    }
 
-        p {
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-        }
+    p.subtitle {
+      margin: 0;
+      color: #6c757d;
+      font-size: 0.95rem;
+    }
 
-        .button-group {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-        }
+    .alerts-section {
+      margin-bottom: 2rem;
+    }
 
-        button {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.1s;
-        }
+    .alert {
+      padding: 1rem 1.25rem;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+      border: 1px solid transparent;
+    }
 
-        button:hover {
-            background-color: var(--primary-hover);
-        }
+    .alert-danger {
+      background-color: var(--danger-bg);
+      color: var(--danger-text);
+      border-color: #f5c2c7;
+    }
 
-        button:active {
-            transform: scale(0.98);
-        }
+    .alert-warning {
+      background-color: var(--warning-bg);
+      color: var(--warning-text);
+      border-color: #ffecb5;
+    }
 
-        .secondary-btn {
-            background-color: transparent;
-            color: var(--text-color);
-            border: 2px solid var(--border-color);
-        }
+    .alert h3 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.1rem;
+    }
 
-        .secondary-btn:hover {
-            background-color: var(--primary-color);
-            color: white;
-        }
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
 
-        .counter-box {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin: 1rem 0;
-            padding: 10px;
-            border-radius: 6px;
-            background-color: rgba(128, 128, 128, 0.1);
-        }
-    </style>
+    @media (min-width: 768px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.25rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+    }
+
+    .matrix-table th, .matrix-table td {
+      border: 1px solid var(--border-color);
+      padding: 0.75rem;
+      width: 25%;
+    }
+
+    .matrix-table th {
+      background-color: #f1f3f5;
+      font-weight: 600;
+    }
+
+    .matrix-cell {
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .matrix-cell:hover {
+      background-color: var(--cell-hover);
+    }
+
+    .matrix-cell.active {
+      background-color: var(--cell-selected);
+      border-color: var(--primary);
+      font-weight: bold;
+    }
+
+    .cell-name {
+      font-size: 0.85rem;
+      color: #6c757d;
+      display: block;
+    }
+
+    .cell-count {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #0d6efd;
+    }
+
+    .sku-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sku-item {
+      padding: 0.6rem 0.8rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .sku-item:last-child {
+      border-bottom: none;
+    }
+
+    .sku-badge {
+      background-color: #e9ecef;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
+    <header>
+      <h1>Zeta Wear · Matriz ABC × XYZ</h1>
+      <p class="subtitle">Clasificación de catálogo por margen (ABC) y variabilidad de demanda mensual (XYZ)</p>
+    </header>
 
-    <div class="container">
-        <h1>¡Página de Prueba!</h1>
-        <p>Esta es una página web de prueba construida con HTML5, CSS3 y JavaScript interactivo.</p>
+    <div class="alerts-section">
+      <div class="alert alert-danger">
+        <h3>🚨 Atención prioritaria: Celda AZ (Alto Margen / Alta Incertidumbre)</h3>
+        <p id="alert-az-text">Cargando referencias AZ...</p>
+      </div>
 
-        <div class="counter-box">
-            Contador: <span id="counter">0</span>
-        </div>
-
-        <div class="button-group">
-            <button id="increment-btn">Incrementar</button>
-            <button id="reset-btn" class="secondary-btn">Reiniciar</button>
-        </div>
-
-        <button id="theme-btn" class="secondary-btn">Cambiar a Modo Oscuro</button>
+      <div class="alert alert-warning">
+        <h3>⚠️ Vigilancia estrecha: Celda AY (Alto Margen / Variabilidad Media)</h3>
+        <p id="alert-ay-text">Cargando referencias AY...</p>
+      </div>
     </div>
 
-    <script>
-        let count = 0;
-        const counterEl = document.getElementById('counter');
-        const incrementBtn = document.getElementById('increment-btn');
-        const resetBtn = document.getElementById('reset-btn');
-        const themeBtn = document.getElementById('theme-btn');
+    <div class="dashboard-grid">
+      <div class="card">
+        <h2>Matriz 3×3 (Recuento)</h2>
+        <table class="matrix-table">
+          <thead>
+            <tr>
+              <th>ABC \ XYZ</th>
+              <th>X (Baja)</th>
+              <th>Y (Media)</th>
+              <th>Z (Alta)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>A (80% mgn)</th>
+              <td class="matrix-cell" data-celda="AX"><span class="cell-name">AX</span><span class="cell-count" id="count-AX">0</span></td>
+              <td class="matrix-cell" data-celda="AY"><span class="cell-name">AY</span><span class="cell-count" id="count-AY">0</span></td>
+              <td class="matrix-cell" data-celda="AZ"><span class="cell-name">AZ</span><span class="cell-count" id="count-AZ">0</span></td>
+            </tr>
+            <tr>
+              <th>B (15% mgn)</th>
+              <td class="matrix-cell" data-celda="BX"><span class="cell-name">BX</span><span class="cell-count" id="count-BX">0</span></td>
+              <td class="matrix-cell" data-celda="BY"><span class="cell-name">BY</span><span class="cell-count" id="count-BY">0</span></td>
+              <td class="matrix-cell" data-celda="BZ"><span class="cell-name">BZ</span><span class="cell-count" id="count-BZ">0</span></td>
+            </tr>
+            <tr>
+              <th>C (5% mgn)</th>
+              <td class="matrix-cell" data-celda="CX"><span class="cell-name">CX</span><span class="cell-count" id="count-CX">0</span></td>
+              <td class="matrix-cell" data-celda="CY"><span class="cell-name">CY</span><span class="cell-count" id="count-CY">0</span></td>
+              <td class="matrix-cell" data-celda="CZ"><span class="cell-name">CZ</span><span class="cell-count" id="count-CZ">0</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-        incrementBtn.addEventListener('click', () => {
-            count++;
-            counterEl.textContent = count;
-        });
+      <div class="card">
+        <h2 id="details-title">Detalle de referencias</h2>
+        <p id="details-subtitle" style="color: #6c757d; font-size: 0.9rem;">Haz clic en cualquier celda de la matriz para filtrar.</p>
+        <ul class="sku-list" id="sku-list-container">
+          <!-- SKUs injected here -->
+        </ul>
+      </div>
+    </div>
+  </div>
 
-        resetBtn.addEventListener('click', () => {
-            count = 0;
-            counterEl.textContent = count;
-        });
+  <script id="embedded-data" type="text/csv">
+sku,clase_abc,cv,clase_xyz,celda
+ZW-TEE-001,A,0.0732,X,AX
+ZW-DEN-001,A,0.0782,X,AX
+ZW-SAS-002,A,0.0727,X,AX
+ZW-TEE-002,A,0.2826,Y,AY
+ZW-VES-002,A,0.3709,Y,AY
+ZW-DEN-002,A,0.3514,Y,AY
+ZW-ACC-004,B,0.1176,X,BX
+ZW-VES-001,B,0.6935,Z,BZ
+ZW-ACC-001,B,0.0964,X,BX
+ZW-SAS-001,B,0.3399,Y,BY
+ZW-TEE-003,B,0.1311,X,BX
+ZW-VES-003,B,0.6146,Z,BZ
+ZW-CAZ-002,B,0.7340,Z,BZ
+ZW-CAZ-001,B,0.4956,Y,BY
+ZW-PUN-001,C,0.2656,Y,CY
+ZW-ACC-002,C,0.2383,X,CX
+ZW-ACC-003,C,0.5257,Z,CZ
+ZW-PUN-002,C,0.6445,Z,CZ
+ZW-DEN-003,C,0.6604,Z,CZ
+ZW-SAS-003,C,0.5076,Z,CZ
+  </script>
 
-        themeBtn.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            if (document.body.classList.contains('dark-mode')) {
-                themeBtn.textContent = 'Cambiar a Modo Claro';
-            } else {
-                themeBtn.textContent = 'Cambiar a Modo Oscuro';
-            }
+  <script>
+    let allData = [];
+    const matrixCeldas = ['AX', 'AY', 'AZ', 'BX', 'BY', 'BZ', 'CX', 'CY', 'CZ'];
+
+    async function loadData() {
+      const paths = [
+        'resultados/clasificacion.csv',
+        'zeta-wear-lab/zeta-wear-lab/resultados/clasificacion.csv'
+      ];
+      let csvText = null;
+
+      for (const path of paths) {
+        try {
+          const resp = await fetch(path);
+          if (resp.ok) {
+            csvText = await resp.text();
+            break;
+          }
+        } catch (e) {
+          // continue
+        }
+      }
+
+      if (!csvText) {
+        const embeddedEl = document.getElementById('embedded-data');
+        if (embeddedEl) {
+          csvText = embeddedEl.textContent;
+        }
+      }
+
+      if (csvText) {
+        parseCSV(csvText);
+      } else {
+        document.getElementById('alert-az-text').textContent = 'Error al cargar los datos CSV.';
+      }
+    }
+
+    function parseCSV(csvText) {
+      const lines = csvText.trim().split('\n');
+      const headers = lines[0].split(',').map(h => h.trim());
+      allData = [];
+
+      for (let i = 1; i < lines.length; i++) {
+        if (!lines[i].trim()) continue;
+        const values = lines[i].split(',').map(v => v.trim());
+        let item = {};
+        headers.forEach((h, idx) => {
+          item[h] = values[idx];
         });
-    </script>
+        allData.push(item);
+      }
+
+      renderMatrix();
+      renderAlerts();
+      selectCell('AY'); // Default selection
+    }
+
+    function renderMatrix() {
+      matrixCeldas.forEach(celda => {
+        const count = allData.filter(d => d.celda === celda).length;
+        const el = document.getElementById(`count-${celda}`);
+        if (el) el.textContent = count;
+      });
+
+      document.querySelectorAll('.matrix-cell').forEach(cell => {
+        cell.addEventListener('click', () => {
+          const celda = cell.getAttribute('data-celda');
+          selectCell(celda);
+        });
+      });
+    }
+
+    function renderAlerts() {
+      const azItems = allData.filter(d => d.celda === 'AZ').map(d => d.sku);
+      const ayItems = allData.filter(d => d.celda === 'AY').map(d => d.sku);
+
+      const azEl = document.getElementById('alert-az-text');
+      if (azItems.length === 0) {
+        azEl.textContent = 'Sin referencias actualmente en la celda AZ (0 SKU). Excelente previsibilidad en referencias A.';
+      } else {
+        azEl.innerHTML = `<strong>${azItems.length} SKU(s):</strong> ${azItems.join(', ')}`;
+      }
+
+      const ayEl = document.getElementById('alert-ay-text');
+      if (ayItems.length === 0) {
+        ayEl.textContent = 'Sin referencias en la celda AY.';
+      } else {
+        ayEl.innerHTML = `<strong>${ayItems.length} SKU(s):</strong> ${ayItems.join(', ')}`;
+      }
+    }
+
+    function selectCell(celda) {
+      document.querySelectorAll('.matrix-cell').forEach(c => c.classList.remove('active'));
+      const activeCell = document.querySelector(`.matrix-cell[data-celda="${celda}"]`);
+      if (activeCell) activeCell.classList.add('active');
+
+      const items = allData.filter(d => d.celda === celda);
+      document.getElementById('details-title').textContent = `Detalle Celda ${celda} (${items.length} SKU)`;
+
+      const container = document.getElementById('sku-list-container');
+      container.innerHTML = '';
+
+      if (items.length === 0) {
+        container.innerHTML = '<li style="padding: 1rem; color: #6c757d;">No hay referencias en esta celda.</li>';
+        return;
+      }
+
+      items.forEach(item => {
+        const li = document.createElement('li');
+        li.className = 'sku-item';
+        li.innerHTML = `
+          <span><strong>${item.sku}</strong></span>
+          <span class="sku-badge">CV: ${item.cv}</span>
+        `;
+        container.appendChild(li);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', loadData);
+  </script>
 </body>
 </html>
